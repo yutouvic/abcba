@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import observer.Ob;
+import observer.Subject;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cw.abcba.myp.entity.DB;
 import com.cw.abcba.myp.entity.Student;
+
+import decrator.H1;
+import decrator.Hero;
+import decrator.W1;
+import decrator.W2;
 
 @RestController
 @EnableAutoConfiguration
@@ -75,6 +83,28 @@ public class TestControl {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@RequestMapping("/test3")
+	@ResponseBody
+	//观察者模式
+	public void test3(){
+		Subject s = new Subject();
+		Ob ob = new Ob();
+		s.registerObserver(ob);
+		s.notifyAllObserver("hahaha", 900);
+		System.out.println(ob.getStr());
+		System.out.println(ob.getRet());
+	}
+	
+	@RequestMapping("/test4")
+	@ResponseBody
+	//装饰者模式
+	public void test4(){
+		Hero h1 = new H1();
+		h1 = new W1(h1);
+		h1 = new W2(h1);
+		System.out.println(h1.attack());
 	}
 	
 	public static void main(String[] args) {
